@@ -126,6 +126,7 @@
 				"/usr/lib/nvidia/wine/nvngx.dll",
 				"/usr/lib/nvidia/wine/nvngx_dlssg.dll",
 				"/usr/lib/systemd/system-preset/98-nvidia.preset",
+				"/usr/lib/systemd/system-sleep/nvidia",
 				"/usr/lib/systemd/system/nvidia-hibernate.service",
 				"/usr/lib/systemd/system/nvidia-persistenced.service",
 				"/usr/lib/systemd/system/nvidia-powerd.service",
@@ -136,7 +137,6 @@
 				"/usr/lib/systemd/system/systemd-hybrid-sleep.service.d/nvidia-suspend-nofreeze.conf",
 				"/usr/lib/systemd/system/systemd-suspend-then-hibernate.service.d/nvidia-suspend-nofreeze.conf",
 				"/usr/lib/systemd/system/systemd-suspend.service.d/nvidia-suspend-nofreeze.conf",
-				"/usr/lib/systemd/systemd-sleep/nvidia",
 				"/usr/lib/tmpfiles.d/nvidia-graphics-driver.conf",
 				"/usr/lib/udev/rules.d/80-nvidia.rules",
 				"/usr/lib/userdb/143.group",
@@ -339,6 +339,6 @@
 		}
 	},
 	"source-name": "nvidia-graphics-driver",
-	"source-release": "42",
+	"source-release": "43",
 	"source-version": "595.71.05"
 }
