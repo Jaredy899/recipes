@@ -1133,6 +1133,7 @@
 				"/usr/share/fish/functions/__fish_complete_proc.fish",
 				"/usr/share/fish/functions/__fish_complete_ssh.fish",
 				"/usr/share/fish/functions/__fish_complete_subcommand.fish",
+				"/usr/share/fish/functions/__fish_complete_sudo.fish",
 				"/usr/share/fish/functions/__fish_complete_suffix.fish",
 				"/usr/share/fish/functions/__fish_complete_user_at_hosts.fish",
 				"/usr/share/fish/functions/__fish_complete_user_ids.fish",
@@ -1151,6 +1152,7 @@
 				"/usr/share/fish/functions/__fish_crux_packages.fish",
 				"/usr/share/fish/functions/__fish_cursor_konsole.fish",
 				"/usr/share/fish/functions/__fish_cursor_xterm.fish",
+				"/usr/share/fish/functions/__fish_cygwin_noacl.fish",
 				"/usr/share/fish/functions/__fish_data_with_directory.fish",
 				"/usr/share/fish/functions/__fish_describe_command.fish",
 				"/usr/share/fish/functions/__fish_echo.fish",
@@ -1160,6 +1162,7 @@
 				"/usr/share/fish/functions/__fish_gnu_complete.fish",
 				"/usr/share/fish/functions/__fish_hg_prompt.fish",
 				"/usr/share/fish/functions/__fish_indent.fish",
+				"/usr/share/fish/functions/__fish_is_cygwin.fish",
 				"/usr/share/fish/functions/__fish_is_first_arg.fish",
 				"/usr/share/fish/functions/__fish_is_first_token.fish",
 				"/usr/share/fish/functions/__fish_is_git_repository.fish",
@@ -1742,6 +1745,6 @@
 		}
 	},
 	"source-name": "fish",
-	"source-release": "21",
-	"source-version": "4.6.0"
+	"source-release": "22",
+	"source-version": "4.7.0"
 }
