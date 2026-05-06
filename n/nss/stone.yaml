@@ -3,7 +3,7 @@
 
 name        : nss
 version     : "3.123.1"
-release     : 45
+release     : 46
 summary     : Network Security Services
 license     : MPL-2.0
 homepage    : https://wiki.mozilla.org/NSS
@@ -27,17 +27,18 @@ setup       : |
     ln -srft certs lib/ckfw/builtins/{certdata.txt,nssckbi.h}
 build       : |
     cd nss
-    %make BUILT_OPT=1 \
-          NSPR_INCLUDE_DIR=%(includedir)/nspr \
-          NSS_DISABLE_GTESTS=1 \
-          NSS_ENABLE_WERROR=0 \
-          NSS_USE_SYSTEM_SQLITE=1 \
-          USE_64=1 \
-          USE_SYSTEM_ZLIB=1 \
-          NATIVE_CC="${CC}" \
-          AR="${AR} rc \$@" \
-          NATIVE_FLAGS="${CFLAGS}" \
-          NATIVE_LDFLAGS="${LDFLAGS}"
+    %make \
+        BUILD_OPT=1 \
+        NSPR_INCLUDE_DIR=%(includedir)/nspr \
+        NSS_DISABLE_GTESTS=1 \
+        NSS_ENABLE_WERROR=0 \
+        NSS_USE_SYSTEM_SQLITE=1 \
+        USE_64=1 \
+        USE_SYSTEM_ZLIB=1 \
+        NATIVE_CC="${CC}" \
+        AR="${AR} rc \$@" \
+        NATIVE_FLAGS="${CFLAGS}" \
+        NATIVE_LDFLAGS="${LDFLAGS}"
 
     # Build ca-certificates-mozilla
     pushd certs
