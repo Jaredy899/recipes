@@ -3,16 +3,18 @@
 
 name        : merkuro
 version     : "26.04.0"
-release     : 22
+release     : 23
 upstreams   :
     - https://download.kde.org/stable/release-service/26.04.0/src/merkuro-26.04.0.tar.xz : 88502900aa2229f2800aec7fd243488bc3cadc03397f0a56d8ba988354fdb602
 homepage    : https://kde.org/applications/system/org.kde.merkuro
 license     :
     - GFDL-1.2-or-later
     - GPL-2.0-or-later
-summary     : KDE's terminal emulator
+summary     : Application suite designed to handle emails, calendars, contacts and tasks
 description : |
-    Konsole is a terminal program for KDE. As well as being a standalone program, it is also used by other KDE programs such as the Kate editor and KDevelop development environment to provide easy access to a terminal window.
+    Merkuro is a KDE personal information management suite for managing email, calendars,
+    contacts, and tasks in one integrated app. It provides a modern interface for organizing
+    communication, scheduling events, tracking to-dos, and keeping address books synchronized.
 builddeps   :
     # Temporary, boulder doesn't handle build ordering resolution correctly when builddeps are added by macros, so add ECM manually
     - cmake(ECM)
