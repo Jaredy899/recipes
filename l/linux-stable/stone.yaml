@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : linux-stable
-version     : "7.0.3"
-release     : 6
+version     : "7.0.4"
+release     : 30
 homepage    : https://kernel.org/
 upstreams   :
-    - https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.0.3.tar.xz : 0bedadbf5788693ddebbcc913c893f1a97349af79ddde7144c2a80b401959f1c
+    - https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.0.4.tar.xz : d92081d84c925adb21a6a709042499e5dcad5dd93a1d9c683f05304fda9257a7
 summary     : The Linux Kernel - Stable
 description : |
     The Linux Kernel - Stable
@@ -34,6 +34,7 @@ builddeps   :
     - binary(pahole)
     - binary(perl)
     - binary(python3)
+    - binary(rsync)
     - binary(rustc)
     - binary(setfont)
     - binary(tr)
@@ -60,15 +61,13 @@ builddeps   :
     - rust-devel # Needs Rust source
     - serpent-artwork
     - systemd # Needs the actual init binary
-packages    :
-    - "%(name)-devel":
-        paths:
-            - /usr/lib/modules/*/build
-            - /usr/src
 environment : |
     # Maximize ccache efficiency as well as make the build fully reproducible, except for the initrd which needs a timestamp to be signed
     export KBUILD_BUILD_USER=root
     export KBUILD_BUILD_TIMESTAMP=$(date --utc --date=@$SOURCE_DATE_EPOCH +%%F)
+
+    _common_make_args="CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 LLVM_IAS=1 WERROR=0"
+    _common_make_build_args="${_common_make_args} VERBOSE=0 V=0"
 setup       : |
     if [[ -f %(pkgdir)/patches/series ]]
     then
@@ -95,13 +94,25 @@ setup       : |
     sed -e "s/^SUBLEVEL =.*/SUBLEVEL = $sub/" -i Makefile
 
     %install_file %(pkgdir)/config-x86_64 .config
-    %make CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 LLVM_IAS=1 WERROR=0 oldconfig || exit 1
+    %make ${_common_make_args} oldconfig || exit 1
 build       : |
     %ccache_zero
     # Do NOT use CONFIG_DEBUG_SECTION_MISMATCH as it is GCC specific
-    %make VERBOSE=0 V=0 CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 LLVM_IAS=1 WERROR=0
-    %make -C tools/objtool VERBOSE=0 V=0 CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 LLVM_IAS=1 WERROR=0
+    %make ${_common_make_build_args}
+    %make -C tools/objtool ${_common_make_build_args}
     %ccache_stats
+
+    ################################################################################
+    #
+    # linux-headers below this block.
+    #
+    # If you are copying this recipe for a variant kernel (linux-lts/linux-gaming)
+    #  DO NOT include anything below this.
+    #
+    ################################################################################
+
+    # linux-headers
+    %make ${_common_make_build_args} headers
 install     : |
     umask 022
     kernelVersion="%(version)-%(release).stable"
@@ -112,7 +123,7 @@ install     : |
 
     # Modules please
     %install_dir %(installroot)%(libdir)/modules/$kernelVersion
-    %make CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 WERROR=0 INSTALL_MOD_PATH=%(installroot)/usr modules_install KERNELRELEASE="$kernelVersion" mod-fw= DEPMOD=/usr/bin/true
+    %make ${_common_make_args} INSTALL_MOD_PATH=%(installroot)/usr modules_install KERNELRELEASE="$kernelVersion" mod-fw= DEPMOD=/usr/bin/true
 
     # Manually construct the debug info from the kernel modules
     %install_dir %(installroot)%(libdir)/debug/.build-id
@@ -200,7 +211,7 @@ install     : |
     %install_file %(pkgdir)/boot.json %(installroot)%(libdir)/kernel/$kernelVersion/boot.json
     sed -e 's/@VERSION@/%(version)-%(release).stable/g' -i %(installroot)%(libdir)/kernel/$kernelVersion/boot.json
 
-    # Install kernel headers
+    # Install kernel headers (for modules)
     headerRoot="/usr/src/linux-headers-%(version)-%(release).stable"
     dstDir="%(installroot)$headerRoot"
     %install_dir $dstDir
@@ -241,4 +252,26 @@ install     : |
     # Compress modules with zstd
     find "%(installroot)%(libdir)/modules" -name '*.ko' -print -exec zstd {} \; -exec rm -v {} \;
 
-# TODO CONFIG_SPI_OFFLOAD_TRIGGER_PWM
+    ################################################################################
+    #
+    # linux-headers below this block.
+    #
+    # If you are copying this recipe for a variant kernel (linux-lts/linux-gaming)
+    #  DO NOT include anything below this.
+    #
+    ################################################################################
+
+    # linux-headers
+    %make ${_common_make_build_args} INSTALL_HDR_PATH=%(installroot)%(prefix) headers_install
+
+packages    :
+    - "%(name)-devel":
+        paths:
+            - /usr/lib/modules/*/build
+            - /usr/src/
+
+    - "linux-headers":
+        summary: Linux kernel libc headers
+        description: Headers for the kernel libc interface
+        paths:
+            - /usr/include/
