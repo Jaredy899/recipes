@@ -13,7 +13,6 @@
 			"files": [
 				"/usr/bin/keyd",
 				"/usr/bin/keyd-application-mapper",
-				"/usr/lib/systemd/system-preset/98-keyd.preset",
 				"/usr/lib/systemd/system/keyd.service",
 				"/usr/lib/sysusers.d/keyd.conf",
 				"/usr/lib/tmpfiles.d/keyd.conf",
@@ -151,6 +150,6 @@
 		}
 	},
 	"source-name": "keyd",
-	"source-release": "5",
+	"source-release": "6",
 	"source-version": "2.6.0"
 }
