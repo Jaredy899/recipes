@@ -3,7 +3,7 @@
 
 name        : lvm2
 version     : "2.03.40"
-release     : 17
+release     : 18
 homepage    : https://sourceware.org/lvm2/
 upstreams   :
     - https://sourceware.org/pub/lvm2/LVM2.2.03.40.tgz : 60c9bb5c0a109f20267bb40ba50c00c84a110fc14c129f21afb5566929bf5645
@@ -64,8 +64,6 @@ install     : |
         install_tmpfiles_configuration
 
     %install_file %(pkgdir)/lvm2-etc.tmpfiles %(installroot)%(tmpfilesdir)/lvm2-etc.conf
-
-    %install_file %(pkgdir)/*.preset -t %(installroot)%(libdir)/systemd/system-preset/
 
     # Stateless
     rm -fv %(installroot)/etc/lvm/lvm.conf \
@@ -153,7 +151,6 @@ packages    :
             - /usr/sbin/dmeventd
             - /usr/share/man/man8/dmeventd.8*
             - /usr/lib/systemd/system/dm-event.*
-            - /usr/lib/systemd/system-preset/device-mapper-event.preset
 
     - "device-mapper-event-libs":
         summary: Device-mapper event daemon - libs

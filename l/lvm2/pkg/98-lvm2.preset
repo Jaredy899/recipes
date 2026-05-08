@@ -1,3 +1,0 @@
-enable blk-availability.service
-enable lvm2-lvmpolld.socket
-enable lvm2-monitor.service
