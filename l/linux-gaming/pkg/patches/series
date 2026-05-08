@@ -1,3 +1,12 @@
+# Security
+
+# https://www.openwall.com/lists/oss-security/2026/05/07/8
+# https://github.com/V4bel/dirtyfrag
+# https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=f4c50a4034e62ab75f1d5cdd191dd5f9c77fdff4
+security/0001-dirty-frag-f4c50a4034e6.patch
+# https://lore.kernel.org/all/afKV2zGR6rrelPC7@v4bel/
+security/0002-dirty-frag-rxrpc-fix-from-netdev-list.patch
+
 # Enable x86_64-v2 build optimisations
 more-ISA-levels-and-uarches-for-kernel-6.16+.patch
 

@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : linux-tools
-version     : "7.0.3"
-release     : 30
+version     : "7.0.4"
+release     : 31
 summary     : Tools included with the Linux source code
 license     : GPL-2.0-only
 homepage    : https://perf.wiki.kernel.org/
 description : |
     Tools included with the Linux source code
 upstreams   :
-    - https://www.kernel.org/pub/linux/kernel/v7.x/linux-7.0.3.tar.xz: 0bedadbf5788693ddebbcc913c893f1a97349af79ddde7144c2a80b401959f1c
+    - https://www.kernel.org/pub/linux/kernel/v7.x/linux-7.0.4.tar.xz: d92081d84c925adb21a6a709042499e5dcad5dd93a1d9c683f05304fda9257a7
 builddeps   :
     - binary(a2x)
     - binary(bison)
@@ -42,31 +42,36 @@ environment : |
     export KBUILD_BUILD_USER=root
     export KBUILD_BUILD_TIMESTAMP=$(date --utc --date=@$SOURCE_DATE_EPOCH +%%F)
 
-    _common_args="prefix=/usr \
-                  mandir=%(mandir) \
-                  CC=clang \
-                  LLVM=1"
+    _common_make_args="CC=%(cc) LD=%(ld) ARCH=x86_64 LLVM=1 LLVM_IAS=1 WERROR=0"
+    _common_make_build_args="${_common_make_args} VERBOSE=0 V=0"
 
-    _perf_args="-f Makefile.perf \
-                ${_common_args} \
+    _common_tools_args="${_common_make_build_args} \
+                        prefix=%(prefix) \
+                        mandir=%(mandir) \
+                        STRIPCMD=/usr/bin/true"
+
+    _perf_args="${_common_tools_args} \
+                -f Makefile.perf \
                 lib=lib/perf \
-                perfexecdir=lib/perf
-                LIBBPF_DYNAMIC=1 WERROR=0"
+                perfexecdir=lib/perf \
+                LIBBPF_DYNAMIC=1"
 
-    _cpupower_args="-C tools/power/cpupower \
+    _cpupower_args="${_common_tools_args} \
+                    -C tools/power/cpupower \
                     libexecdir=%(libdir)/cpupower \
-                    ${_common_args} \
-                    docdir=%(docdir)/cpupower"
+                    docdir=%(docdir)/cpupower \
+                    DEBUG=false"
 
-    _x86_energy_args="-C tools/power/x86/x86_energy_perf_policy \
-                      ${_common_args}"
+    _x86_energy_args="${_common_tools_args} \
+                      -C tools/power/x86/x86_energy_perf_policy"
 
-    _turbostat_args="-C tools/power/x86/turbostat \
-                     ${_common_args}"
+    _turbostat_args="${_common_tools_args} \
+                     -C tools/power/x86/turbostat"
 
-    _hyperv_args="-C tools/hv \
-                  ${_common_args} \
+    _hyperv_args="${_common_tools_args} \
+                  -C tools/hv \
                   libexecdir=%(libdir)/hyperv"
+
     export CFLAGS+=" -DKVP_SCRIPTS_PATH=\\\"%(libdir)/hyperv\\\""
 build       : |
     pushd tools/perf
