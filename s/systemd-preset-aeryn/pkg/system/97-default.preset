@@ -17,6 +17,9 @@ enable NetworkManager-wait-online.service
 enable NetworkManager-dispatcher.service
 enable ModemManager.service
 
+# Default wireless service
+enable iwd.service
+
 # TODO: Auditd?
 
 enable bluetooth.service
@@ -90,8 +93,11 @@ enable virtlockd.socket
 enable virtlockd-admin.socket
 
 # Locally-running services
+enable blk-availability.service
 enable lvm2-monitor.*
 enable lvm2-lvmetad.*
+enable lvm2-lvmpolld.*
+enable lvm-devices-import.*
 enable dm-event.*
 enable dmraid-activation.service
 
@@ -101,8 +107,6 @@ enable qemu-guest-agent.service
 
 # uuidd.socket?
 
-enable lvm2-lvmpolld.*
-enable lvm-devices-import.*
 
 enable lm_sensors.service
 enable smartd.service
@@ -139,7 +143,6 @@ enable waydroid-container.service
 enable nfs-client.target
 
 # For out of the box configuration
-enable blk-availability.service
 enable com.system76.Scheduler.service
 enable lactd.service
 enable lxcfs.service
@@ -148,3 +151,4 @@ enable netavark-nftables-reload.service
 enable scx_loader.service
 enable tinysparql-xdg-portal-3.service
 enable xwayland-satellite.service
+enable keyd.service
