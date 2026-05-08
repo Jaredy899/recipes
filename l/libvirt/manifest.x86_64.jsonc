@@ -34,6 +34,7 @@
 				"pkgconfig(libtirpc)",
 				"pkgconfig(libudev)",
 				"pkgconfig(libxml-2.0)",
+				"pkgconfig(numa)",
 				"pkgconfig(pciaccess)",
 				"pkgconfig(polkit-agent-1)",
 				"pkgconfig(readline)"
@@ -127,7 +128,6 @@
 				"/usr/lib/libvirt/storage-file",
 				"/usr/lib/libvirt/virt-login-shell-helper",
 				"/usr/lib/sysctl.d/60-libvirtd.conf",
-				"/usr/lib/systemd/system-preset/98-libvirt.preset",
 				"/usr/lib/systemd/system/libvirt-guests.service",
 				"/usr/lib/systemd/system/libvirtd-admin.socket",
 				"/usr/lib/systemd/system/libvirtd-ro.socket",
@@ -652,6 +652,7 @@
 				"pkgconfig(libtirpc)",
 				"pkgconfig(libudev)",
 				"pkgconfig(libxml-2.0)",
+				"pkgconfig(numa)",
 				"pkgconfig(pciaccess)",
 				"pkgconfig(polkit-agent-1)",
 				"pkgconfig(readline)"
@@ -727,6 +728,7 @@
 				"pkgconfig(libtirpc)",
 				"pkgconfig(libudev)",
 				"pkgconfig(libxml-2.0)",
+				"pkgconfig(numa)",
 				"pkgconfig(pciaccess)",
 				"pkgconfig(polkit-agent-1)",
 				"pkgconfig(readline)"
@@ -1031,6 +1033,6 @@
 		}
 	},
 	"source-name": "libvirt",
-	"source-release": "15",
+	"source-release": "16",
 	"source-version": "12.3.0"
 }
