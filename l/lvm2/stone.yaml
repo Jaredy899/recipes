@@ -3,7 +3,7 @@
 
 name        : lvm2
 version     : "2.03.40"
-release     : 18
+release     : 19
 homepage    : https://sourceware.org/lvm2/
 upstreams   :
     - https://sourceware.org/pub/lvm2/LVM2.2.03.40.tgz : 60c9bb5c0a109f20267bb40ba50c00c84a110fc14c129f21afb5566929bf5645
@@ -58,7 +58,9 @@ setup       : |
 build       : |
     %make
 install     : |
-    %make_install \
+    # -j1 fixes a FTBFS on the build servers where the install routine is
+    # not able to find /mason/install/usr/lib/device-mapper/
+    %make_install -j1 \
         install_systemd_generators \
         install_systemd_units \
         install_tmpfiles_configuration
