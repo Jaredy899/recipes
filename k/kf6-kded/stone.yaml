@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : kf6-kded
-version     : "6.25.0"
-release     : 16
+version     : "6.26.0"
+release     : 17
 upstreams   :
-    - https://download.kde.org/stable/frameworks/6.25/kded-6.25.0.tar.xz : 030cc827c37b490a2181e120cd831b73c9a7683a87cf55d0d5b334059f78c590
+    - https://download.kde.org/stable/frameworks/6.26/kded-6.26.0.tar.xz : 4265d1162cbd7febf16d103bf1bd9fab858fa3f54f52797ed0938436bee347af
 homepage    : https://community.kde.org/Frameworks
 license     :
     - LGPL-2.0-only
