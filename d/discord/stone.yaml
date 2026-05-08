@@ -2,50 +2,32 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : discord
-version     : "0.0.135"
-release     : 52
+version     : "1.0.137"
+release     : 53
 summary     : Group chat, video, and voice calling app
 license     : Distributable
 homepage    : https://discord.com/
 upstreams   :
-    - https://stable.dl2.discordapp.net/apps/linux/0.0.135/discord-0.0.135.deb:
-        hash: 802c0121bba21e8088f9e63f178beebd9ee9f8d9b561ecbcdacbfec990b66606
-        unpack: false
-        rename: discord.deb
+    - https://dl.discordapp.net/apps/linux/1.0.137/discord-1.0.137.tar.gz : 9b2b7b451ae4a0d2dc8dd858be4252d6699c7b4f50f579a9025931431e0d555e
 description : |
     Discord is a proprietary freeware VoIP application and digital distribution platform designed for video gaming communities, that specializes in text, image, video and audio communication between users in a chat channel.
 builddeps   :
-    - binary(ar)
-    - binary(bsdtar-static)
     - binary(ln)
 rundeps     :
     - binary(xdg-open)
-    - binary(python3)
-    - soname(libXss.so.1(x86_64))
-    - soname(libatomic.so.1(x86_64))
-# Causes krisp noise suppression not to load
-debug       : false
-strip       : false
 setup       : |
-    ar xf %(sourcedir)/discord.deb
-    bsdtar-static xf data.tar.*
+    %patch %(pkgdir)/0001-Use-libdir.patch
 install     : |
     _discord_root=%(libdir)/discord
     _discord_install=%(installroot)/$_discord_root
 
-    %install_dir $_discord_install
-    cp -R usr/share/discord/* $_discord_install
+    %install_exe discord -t $_discord_install
+    %install_exe updater_bootstrap -t $_discord_install
 
-    # Wrapper binary and script to disable the update check
-    %install_exe %(pkgdir)/discord.sh.in %(installroot)/%(bindir)/discord
-    sed -i "s|@@DISCORD_ROOT@@|$_discord_root|g" %(installroot)/%(bindir)/discord
-    %install_exe %(pkgdir)/disable-breaking-updates.py -t $_discord_install/
+    %install_dir %(installroot)%(bindir)
+    ln -srv $_discord_install/discord %(installroot)/%(bindir)/discord
 
     # Desktop file, icon
     %install_file %(pkgdir)/discord.desktop %(installroot)/%(datadir)/applications/discord.desktop
-    rm -v $_discord_install/discord.desktop
     %install_dir %(installroot)/%(datadir)/icons/hicolor/256x256/apps
-    ln -srv $_discord_install/discord.png %(installroot)/%(datadir)/icons/hicolor/256x256/apps/discord.png
-
-    # Useless to us
-    rm -v $_discord_install/postinst.sh
+    ln -srv discord.png %(installroot)/%(datadir)/icons/hicolor/256x256/apps/discord.png
