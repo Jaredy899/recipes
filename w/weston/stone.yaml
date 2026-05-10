@@ -3,7 +3,7 @@
 
 name        : weston
 version     : "15.0.1"
-release     : 4
+release     : 5
 homepage    : https://gitlab.freedesktop.org/wayland/weston
 upstreams   :
     - https://gitlab.freedesktop.org/wayland/weston/-/archive/15.0.1/weston-15.0.1.tar.gz : dbcedc27f880d1f10a9edc010a9ea044a6a2861269f2aa3c8647cc557a3fd73a

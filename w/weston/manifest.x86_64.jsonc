@@ -42,7 +42,7 @@
 				"soname(libgobject-2.0.so.0(x86_64))",
 				"soname(libinput.so.10(x86_64))",
 				"soname(libjpeg.so.8(x86_64))",
-				"soname(liblua.so.5.4(x86_64))",
+				"soname(liblua.so.5.5(x86_64))",
 				"soname(libm.so.6(x86_64))",
 				"soname(libpango-1.0.so.0(x86_64))",
 				"soname(libpangocairo-1.0.so.0(x86_64))",
@@ -519,6 +519,6 @@
 		}
 	},
 	"source-name": "weston",
-	"source-release": "4",
+	"source-release": "5",
 	"source-version": "15.0.1"
 }
