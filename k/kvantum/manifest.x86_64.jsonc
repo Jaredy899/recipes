@@ -139,6 +139,7 @@
 				"/usr/share/color-schemes/KvantumAlt.colors",
 				"/usr/share/icons/hicolor/scalable/apps/kvantum.svg",
 				"/usr/share/kvantummanager/translations/kvantummanager_ar_DZ.qm",
+				"/usr/share/kvantummanager/translations/kvantummanager_az.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_be.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_bg.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_ca.qm",
@@ -147,6 +148,7 @@
 				"/usr/share/kvantummanager/translations/kvantummanager_da.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_de.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_el.qm",
+				"/usr/share/kvantummanager/translations/kvantummanager_en_GB.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_eo.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_es.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_et.qm",
@@ -177,6 +179,7 @@
 				"/usr/share/kvantummanager/translations/kvantummanager_zh_Hant.qm",
 				"/usr/share/kvantummanager/translations/kvantummanager_zh_TW.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_ar_DZ.qm",
+				"/usr/share/kvantumpreview/translations/kvantumpreview_az.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_bg.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_ca.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_cs.qm",
@@ -184,6 +187,7 @@
 				"/usr/share/kvantumpreview/translations/kvantumpreview_da.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_de.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_el.qm",
+				"/usr/share/kvantumpreview/translations/kvantumpreview_en_GB.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_eo.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_es.qm",
 				"/usr/share/kvantumpreview/translations/kvantumpreview_et.qm",
@@ -221,6 +225,6 @@
 		}
 	},
 	"source-name": "kvantum",
-	"source-release": "3",
-	"source-version": "1.1.6"
+	"source-release": "4",
+	"source-version": "1.1.7"
 }
