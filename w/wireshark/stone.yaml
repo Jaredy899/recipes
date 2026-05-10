@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : wireshark
-version     : "4.6.4"
-release     : 6
+version     : "4.6.5"
+release     : 7
 homepage    : https://www.wireshark.org/
 upstreams   :
-    - https://gitlab.com/wireshark/wireshark/-/archive/v4.6.4/wireshark-v4.6.4.tar.gz : 262acbdae57e1b306c75d623359bd82a2a3de57dd9c0f158690043a7cd5af257
+    - https://gitlab.com/wireshark/wireshark/-/archive/v4.6.5/wireshark-v4.6.5.tar.gz : b4d5c560a679c25d12e0087ba67cd1494853f8d8b912df99e22645c7bf3dbd9e
 summary     : Wireshark is the world's foremost network protocol analyzer.
 description : |
     Wireshark is the world's foremost network protocol analyzer. It lets you see what's happening on your network at a microscopic level.

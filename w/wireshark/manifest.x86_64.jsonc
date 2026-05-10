@@ -142,7 +142,7 @@
 				"soname(libgnutls.so.30(x86_64))",
 				"soname(libk5crypto.so.3(x86_64))",
 				"soname(libkrb5.so.3(x86_64))",
-				"soname(liblua.so.5.4(x86_64))",
+				"soname(liblua.so.5.5(x86_64))",
 				"soname(liblz4.so.1(x86_64))",
 				"soname(libm.so.6(x86_64))",
 				"soname(libmaxminddb.so.0(x86_64))",
@@ -178,9 +178,9 @@
 				"/usr/bin/tfshark",
 				"/usr/bin/tshark",
 				"/usr/lib/libwireshark.so.19",
-				"/usr/lib/libwireshark.so.19.0.4",
+				"/usr/lib/libwireshark.so.19.0.5",
 				"/usr/lib/libwiretap.so.16",
-				"/usr/lib/libwiretap.so.16.0.4",
+				"/usr/lib/libwiretap.so.16.0.5",
 				"/usr/lib/libwsutil.so.17",
 				"/usr/lib/libwsutil.so.17.0.0",
 				"/usr/lib/sysusers.d/wireshark.conf",
@@ -668,6 +668,6 @@
 		}
 	},
 	"source-name": "wireshark",
-	"source-release": "6",
-	"source-version": "4.6.4"
+	"source-release": "7",
+	"source-version": "4.6.5"
 }
