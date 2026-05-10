@@ -63,6 +63,7 @@
 				"/usr/lib/golang/go.env",
 				"/usr/lib/golang/lib/fips140/Makefile",
 				"/usr/lib/golang/lib/fips140/README.md",
+				"/usr/lib/golang/lib/fips140/certified.txt",
 				"/usr/lib/golang/lib/fips140/fips140.sum",
 				"/usr/lib/golang/lib/fips140/inprocess.txt",
 				"/usr/lib/golang/lib/fips140/v1.0.0-c2097c7c.zip",
@@ -2769,6 +2770,8 @@
 				"/usr/lib/golang/src/crypto/internal/fips140/check/checktest/test.go",
 				"/usr/lib/golang/src/crypto/internal/fips140/drbg/cast.go",
 				"/usr/lib/golang/src/crypto/internal/fips140/drbg/ctrdrbg.go",
+				"/usr/lib/golang/src/crypto/internal/fips140/drbg/entropy_fips140.go",
+				"/usr/lib/golang/src/crypto/internal/fips140/drbg/entropy_wasm.go",
 				"/usr/lib/golang/src/crypto/internal/fips140/drbg/rand.go",
 				"/usr/lib/golang/src/crypto/internal/fips140/drbg/rand_test.go",
 				"/usr/lib/golang/src/crypto/internal/fips140/ecdh/cast.go",
@@ -10057,7 +10060,9 @@
 				"/usr/lib/golang/test/fixedbugs/issue77815.go",
 				"/usr/lib/golang/test/fixedbugs/issue77919.go",
 				"/usr/lib/golang/test/fixedbugs/issue7794.go",
+				"/usr/lib/golang/test/fixedbugs/issue78404.go",
 				"/usr/lib/golang/test/fixedbugs/issue7863.go",
+				"/usr/lib/golang/test/fixedbugs/issue78641.go",
 				"/usr/lib/golang/test/fixedbugs/issue7867.go",
 				"/usr/lib/golang/test/fixedbugs/issue7884.go",
 				"/usr/lib/golang/test/fixedbugs/issue7921.go",
@@ -10976,6 +10981,6 @@
 		}
 	},
 	"source-name": "golang",
-	"source-release": "32",
-	"source-version": "1.26.2"
+	"source-release": "33",
+	"source-version": "1.26.3"
 }
