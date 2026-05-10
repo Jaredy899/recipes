@@ -15,8 +15,8 @@
 			"files": [
 				"/usr/bin/lua",
 				"/usr/bin/luac",
-				"/usr/lib/lua/5.4",
-				"/usr/share/lua/5.4",
+				"/usr/lib/lua/5.5",
+				"/usr/share/lua/5.5",
 				"/usr/share/man/lua.1",
 				"/usr/share/man/luac.1"
 			],
@@ -40,13 +40,13 @@
 				"/usr/include/luaconf.h",
 				"/usr/include/lualib.h",
 				"/usr/lib/liblua.so",
-				"/usr/lib/pkgconfig/lua-5.4.pc",
+				"/usr/lib/pkgconfig/lua-5.5.pc",
 				"/usr/lib/pkgconfig/lua.pc"
 			],
 			"name": "lua-devel",
 			"provides": [
 				"pkgconfig(lua)",
-				"pkgconfig(lua-5.4)"
+				"pkgconfig(lua-5.5)"
 			]
 		},
 		"lua-libs": {
@@ -58,16 +58,16 @@
 				"soname(libm.so.6(x86_64))"
 			],
 			"files": [
-				"/usr/lib/liblua.so.5.4",
-				"/usr/lib/liblua.so.5.4.8"
+				"/usr/lib/liblua.so.5.5",
+				"/usr/lib/liblua.so.5.5.0"
 			],
 			"name": "lua-libs",
 			"provides": [
-				"soname(liblua.so.5.4(x86_64))"
+				"soname(liblua.so.5.5(x86_64))"
 			]
 		}
 	},
 	"source-name": "lua",
-	"source-release": "8",
-	"source-version": "5.4.8"
+	"source-release": "9",
+	"source-version": "5.5.0"
 }
