@@ -97,6 +97,6 @@
 		}
 	},
 	"source-name": "bcachefs-module",
-	"source-release": "13",
-	"source-version": "1.38.2"
+	"source-release": "14",
+	"source-version": "1.38.3"
 }
