@@ -22,6 +22,7 @@
 				"binary(patch)",
 				"binary(pkgconf)",
 				"binary(ps)",
+				"binary(python)",
 				"binary(renice)",
 				"binary(tar)",
 				"binary(unxz)",
@@ -42,6 +43,6 @@
 		}
 	},
 	"source-name": "build-essential",
-	"source-release": "8",
+	"source-release": "9",
 	"source-version": "0"
 }
