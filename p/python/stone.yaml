@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : python
-version     : "3.14.4"
-release     : 21
+version     : "3.14.5"
+release     : 22
 summary     : Python language interpreter
 license     : Python-2.0
 homepage    : https://www.python.org
 description : |
     Python language interpreter
 upstreams   :
-    - https://www.python.org/ftp/python/3.14.4/Python-3.14.4.tar.xz: d923c51303e38e249136fc1bdf3568d56ecb03214efdef48516176d3d7faaef8
+    - https://www.python.org/ftp/python/3.14.5/Python-3.14.5.tar.xz: 7e32597b99e5d9a39abed35de4693fa169df3e5850d4c334337ffd6a19a36db6
 builddeps   :
     # - binary(llvm-bolt)
     - binary(patchelf)
