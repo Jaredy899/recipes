@@ -3,7 +3,7 @@
 
 name        : wireplumber
 version     : "0.5.14"
-release     : 13
+release     : 14
 homepage    : https://gitlab.freedesktop.org/pipewire/wireplumber/
 upstreams   :
     - https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/0.5.14/wireplumber-0.5.14.tar.gz : e91f04cd8cec75d72b8a2aaa7e90b1ba0a5e2094b7a882fc3a29a484a48a87e9
