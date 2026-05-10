@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : jujutsu
-version     : "0.40.0"
-release     : 11
+version     : "0.41.0"
+release     : 12
 homepage    : https://jj-vcs.github.io/jj/
 upstreams   :
-    - https://github.com/jj-vcs/jj/archive/refs/tags/v0.40.0.tar.gz : ca45f2b866ce2fa25c7fc485e6b168cf055a39b1eab0ea170738c0b7e86d3b33
+    - https://github.com/jj-vcs/jj/archive/refs/tags/v0.41.0.tar.gz : 135bf1df883a7f50c96907d87a246ec9fbe885d2d4fe4d1bf7d34d98dec910ba
 summary     : Git-compatible VCS that is both simple and powerful
 description : |
     Git-compatible VCS that is both simple and powerful
