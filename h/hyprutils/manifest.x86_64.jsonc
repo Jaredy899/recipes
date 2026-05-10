@@ -14,7 +14,7 @@
 				"soname(libstdc++.so.6(x86_64))"
 			],
 			"files": [
-				"/usr/lib/libhyprutils.so.0.13.0",
+				"/usr/lib/libhyprutils.so.0.13.1",
 				"/usr/lib/libhyprutils.so.12"
 			],
 			"name": "hyprutils",
@@ -71,6 +71,6 @@
 		}
 	},
 	"source-name": "hyprutils",
-	"source-release": "2",
-	"source-version": "0.13.0"
+	"source-release": "3",
+	"source-version": "0.13.1"
 }
