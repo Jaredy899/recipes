@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : ddcutil
-version     : "2.2.6"
-release     : 6
+version     : "2.2.7"
+release     : 7
 upstreams   :
-    - https://github.com/rockowitz/ddcutil/archive/v2.2.6.tar.gz : 60edf64b955f58f836211b0bad1616e912ac26f6c955325e43faf51690422134
+    - https://github.com/rockowitz/ddcutil/archive/v2.2.7.tar.gz : 7b5cb9824c23974241146f4a696abc65f8e9d1e950198c8dc00e4a5c6a2f41ee
 homepage    : https://ddcutil.com/
 license     :
     - GPL-2.0-only
@@ -20,8 +20,12 @@ description : |
 
     A particular use case for ddcutil is as part of color profile management. Monitor calibration is relative to the monitor color settings currently in effect, e.g. red gain. ddcutil allows color related settings to be saved at the time a monitor is calibrated, and then restored when the calibration is applied.
 builddeps   :
+    - binary(bison)
+    - binary(flex)
+    - pkgconfig(dbus-1)
     - pkgconfig(glib-2.0)
     - pkgconfig(jansson)
+    - pkgconfig(libacl)
     - pkgconfig(libdrm)
     - pkgconfig(libusb-1.0)
     - pkgconfig(udev)
