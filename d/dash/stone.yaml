@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : dash
-version     : "0.5.13.3"
-release     : 18
+version     : "0.5.13.4"
+release     : 19
 homepage    : http://gondor.apana.org.au/~herbert/dash
 upstreams   :
-    - http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.13.3.tar.gz: a83727c1299ac4c3d9d43979393b3a4eb00275d5636ae02526e7979d51d6fbd1
+    - http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.13.4.tar.gz: d10dfd41cda59165560db39ca915c2c4a7636fff04281d8d2df77ad92c753e2b
 summary     : Small and fast POSIX-compliant shell
 description : |
     Small and fast POSIX-compliant shell
