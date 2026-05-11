@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : yelp
-version     : 49.0
-release     : 1
+version     : "49.1"
+release     : 2
 homepage    : https://apps.gnome.org/Yelp/
 upstreams   :
-    - https://download.gnome.org/sources/yelp/49/yelp-49.0.tar.xz : e6614e0b1f4ba5fe7b8d149bdd42673f030656fbdcd736ae9860719197c63457
+    - https://download.gnome.org/sources/yelp/49/yelp-49.1.tar.xz : 3e3e94ef2d2c9487cc51062e3afbfa1578cebd29d80c84357b6d7ee6dcfd8a74
 summary     : Help viewer for GNOME
 description : |
     Yelp is the GNOME help viewer. It is the default Mallard viewer, but it can also display DocBook, info, man, and HTML documentation.

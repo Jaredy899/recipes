@@ -109,6 +109,7 @@
 				"/usr/share/locale/ko/LC_MESSAGES/yelp.mo",
 				"/usr/share/locale/ks/LC_MESSAGES/yelp.mo",
 				"/usr/share/locale/ku/LC_MESSAGES/yelp.mo",
+				"/usr/share/locale/kw/LC_MESSAGES/yelp.mo",
 				"/usr/share/locale/ky/LC_MESSAGES/yelp.mo",
 				"/usr/share/locale/la/LC_MESSAGES/yelp.mo",
 				"/usr/share/locale/li/LC_MESSAGES/yelp.mo",
@@ -442,6 +443,6 @@
 		}
 	},
 	"source-name": "yelp",
-	"source-release": "1",
-	"source-version": "49.0"
+	"source-release": "2",
+	"source-version": "49.1"
 }
