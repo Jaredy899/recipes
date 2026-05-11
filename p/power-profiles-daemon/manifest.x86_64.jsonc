@@ -17,6 +17,7 @@
 				"python-shtab"
 			],
 			"depends": [
+				"binary(python)",
 				"interpreter(/usr/lib/ld-linux-x86-64.so.2(x86_64))",
 				"python-pygobject",
 				"soname(libc.so.6(x86_64))",
@@ -44,6 +45,6 @@
 		}
 	},
 	"source-name": "power-profiles-daemon",
-	"source-release": "6",
+	"source-release": "7",
 	"source-version": "0.30"
 }
