@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : drkonqi
-version     : "6.6.4"
-release     : 15
+version     : "6.6.5"
+release     : 16
 upstreams   :
-    - https://download.kde.org/stable/plasma/6.6.4/drkonqi-6.6.4.tar.xz : 6ccabea68b7178c6b6af4b98a332f1ae7b256d38a8bac384fa3e59ba3972a3e5
+    - https://download.kde.org/stable/plasma/6.6.5/drkonqi-6.6.5.tar.xz : b2b104d5f30224bca88280246ca990ac314d81cb1bf0d3857613ff683db92d82
 homepage    : https://kde.org/plasma-desktop/
 license     :
     - GPL-2.0-or-later
