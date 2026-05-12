@@ -44,7 +44,7 @@
 				"/usr/bin/test-unit",
 				"/usr/bin/typeprof",
 				"/usr/lib/libruby.so.4.0",
-				"/usr/lib/libruby.so.4.0.3",
+				"/usr/lib/libruby.so.4.0.4",
 				"/usr/lib/ruby/4.0/English.rb",
 				"/usr/lib/ruby/4.0/bundled_gems.rb",
 				"/usr/lib/ruby/4.0/bundler.rb",
@@ -251,6 +251,7 @@
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/circleci/config.yml.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/exe/newgem.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/Cargo.toml.tt",
+				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/build.rs.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/extconf-c.rb.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/extconf-go.rb.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/extconf-rust.rb.tt",
@@ -260,6 +261,7 @@
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/newgem.go.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/newgem.h.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/ext/newgem/src/lib.rs.tt",
+				"/usr/lib/ruby/4.0/bundler/templates/newgem/github/workflows/build-gems.yml.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/github/workflows/main.yml.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/gitignore.tt",
 				"/usr/lib/ruby/4.0/bundler/templates/newgem/gitlab-ci.yml.tt",
@@ -1026,8 +1028,8 @@
 				"/usr/lib/ruby/gems/4.0/gems/bigdecimal-4.0.1/sample/linear.rb",
 				"/usr/lib/ruby/gems/4.0/gems/bigdecimal-4.0.1/sample/nlsolve.rb",
 				"/usr/lib/ruby/gems/4.0/gems/bigdecimal-4.0.1/sample/pi.rb",
-				"/usr/lib/ruby/gems/4.0/gems/bundler-4.0.6/exe/bundle",
-				"/usr/lib/ruby/gems/4.0/gems/bundler-4.0.6/exe/bundler",
+				"/usr/lib/ruby/gems/4.0/gems/bundler-4.0.10/exe/bundle",
+				"/usr/lib/ruby/gems/4.0/gems/bundler-4.0.10/exe/bundler",
 				"/usr/lib/ruby/gems/4.0/gems/csv-3.3.5/LICENSE.txt",
 				"/usr/lib/ruby/gems/4.0/gems/csv-3.3.5/NEWS.md",
 				"/usr/lib/ruby/gems/4.0/gems/csv-3.3.5/README.md",
@@ -2638,7 +2640,7 @@
 				"/usr/lib/ruby/gems/4.0/specifications/bigdecimal-4.0.1.gemspec",
 				"/usr/lib/ruby/gems/4.0/specifications/csv-3.3.5.gemspec",
 				"/usr/lib/ruby/gems/4.0/specifications/debug-1.11.1.gemspec",
-				"/usr/lib/ruby/gems/4.0/specifications/default/bundler-4.0.6.gemspec",
+				"/usr/lib/ruby/gems/4.0/specifications/default/bundler-4.0.10.gemspec",
 				"/usr/lib/ruby/gems/4.0/specifications/default/date-3.5.1.gemspec",
 				"/usr/lib/ruby/gems/4.0/specifications/default/delegate-0.6.1.gemspec",
 				"/usr/lib/ruby/gems/4.0/specifications/default/did_you_mean-2.0.0.gemspec",
@@ -3057,6 +3059,6 @@
 		}
 	},
 	"source-name": "ruby",
-	"source-release": "15",
-	"source-version": "4.0.3"
+	"source-release": "16",
+	"source-version": "4.0.4"
 }
