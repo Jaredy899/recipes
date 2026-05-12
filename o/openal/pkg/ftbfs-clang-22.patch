@@ -1,0 +1,324 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Reilly Brogan <reilly@reillybrogan.com>
+Date: Tue, 12 May 2026 10:02:28 -0500
+Subject: [PATCH] Revert "Mark the resampler functions as non-blocking"
+
+This reverts commit f011a029530c4ae7b5ec774c0e20e3d42098b390.
+---
+ alc/alu.cpp                | 12 +++++-------
+ core/converter.cpp         |  2 +-
+ core/mixer/defs.h          | 12 +++++-------
+ core/mixer/mixer_c.cpp     | 20 ++++++++++----------
+ core/mixer/mixer_neon.cpp  | 14 +++++++-------
+ core/mixer/mixer_sse.cpp   | 14 +++++++-------
+ core/mixer/mixer_sse2.cpp  |  6 +++---
+ core/mixer/mixer_sse41.cpp |  6 +++---
+ 8 files changed, 41 insertions(+), 45 deletions(-)
+
+diff --git a/alc/alu.cpp b/alc/alu.cpp
+index b7f0918ee..b5c39e550 100644
+--- a/alc/alu.cpp
++++ b/alc/alu.cpp
+@@ -138,15 +138,14 @@ auto SelectHrtfMixer() -> HrtfDirectMixerFunc
+ 
+ 
+ void BsincPrepare(unsigned const increment, BsincState *const state, BSincTable const *const table)
+-    noexcept NONBLOCKING
+ {
+     auto si = std::size_t{BSincScaleCount - 1};
+     auto sf = 0.0_f32;
+ 
+     if(increment > MixerFracOne)
+     {
+-        sf = float{MixerFracOne}/f32::from(increment) - table->scaleBase;
+-        sf = std::max(0.0_f32, float{BSincScaleCount}*sf*table->scaleRange - 1.0f);
++        sf = MixerFracOne/f32::from(increment) - table->scaleBase;
++        sf = std::max(0.0_f32, BSincScaleCount*sf*table->scaleRange - 1.0f);
+ 
+         si = float2uint(sf.c_val);
+         sf -= f32::from(si);
+@@ -159,13 +158,12 @@ void BsincPrepare(unsigned const increment, BsincState *const state, BSincTable
+ 
+     state->sf = sf.c_val;
+     state->m = table->m[si];
+-    state->l = (state->m/2u) - 1u;
++    state->l = (state->m/2) - 1;
+     state->filter = table->Tab.subspan(table->filterOffset[si].c_val);
+ }
+ 
+ [[nodiscard]]
+-auto SelectResampler(Resampler const resampler, unsigned const increment) noexcept NONBLOCKING
+-    -> ResamplerFunc
++auto SelectResampler(Resampler const resampler, unsigned const increment) -> ResamplerFunc
+ {
+     switch(resampler)
+     {
+@@ -251,7 +249,7 @@ void aluInit(CompatFlagBitset const flags, float const nfcscale)
+ 
+ 
+ auto PrepareResampler(Resampler const resampler, unsigned const increment,
+-    InterpState *const state) noexcept NONBLOCKING -> ResamplerFunc
++    InterpState *const state) -> ResamplerFunc
+ {
+     switch(resampler)
+     {
+diff --git a/core/converter.cpp b/core/converter.cpp
+index a0c90eba0..d136adf33 100644
+--- a/core/converter.cpp
++++ b/core/converter.cpp
+@@ -200,7 +200,7 @@ auto SampleConverter::Create(DevFmtType const srcType, DevFmtType const dstType,
+     if(converter->mIncrement == MixerFracOne)
+     {
+         converter->mResample = [](InterpState const*, std::span<float const> const src, unsigned,
+-            unsigned const, std::span<float> const dst) noexcept NONBLOCKING
++            unsigned const, std::span<float> const dst)
+         {
+             std::ranges::copy(src | std::views::drop(MaxResamplerEdge)
+                 | std::views::take(dst.size()), dst.begin());
+diff --git a/core/mixer/defs.h b/core/mixer/defs.h
+index 90ad2b35b..707d720be 100644
+--- a/core/mixer/defs.h
++++ b/core/mixer/defs.h
+@@ -69,16 +69,15 @@ struct CubicState {
+ using InterpState = std::variant<std::monostate, CubicState, BsincState>;
+ 
+ using ResamplerFunc = void(*)(InterpState const *state, std::span<float const> src, unsigned frac,
+-    unsigned increment, std::span<float> dst) noexcept NONBLOCKING;
++    unsigned increment, std::span<float> dst);
+ 
+ [[nodiscard]]
+-auto PrepareResampler(Resampler resampler, unsigned increment, InterpState *state) noexcept
+-    NONBLOCKING -> ResamplerFunc;
++auto PrepareResampler(Resampler resampler, unsigned increment, InterpState *state)
++    -> ResamplerFunc;
+ 
+ #define DECL_RESAMPLER(T, I)                                                  \
+ void Resample_##T##_##I(InterpState const *state, std::span<float const> src, \
+-    unsigned frac, unsigned increment, std::span<float> dst) noexcept         \
+-    NONBLOCKING;
++    unsigned frac, unsigned increment, std::span<float> dst);
+ 
+ #define DECL_MIXER(I)                                                         \
+ void Mix_##I(std::span<float const> InSamples,                                \
+@@ -147,8 +146,7 @@ DECL_RESAMPLER(Cubic, SSE4)
+ /* Vectorized resampler helpers */
+ template<std::size_t N> constexpr
+ void InitPosArrays(unsigned const pos, unsigned const frac, unsigned const increment,
+-    std::span<unsigned, N> const frac_arr, std::span<unsigned, N> const pos_arr) noexcept
+-    NONBLOCKING
++    std::span<unsigned, N> const frac_arr, std::span<unsigned, N> const pos_arr)
+ {
+     static_assert(pos_arr.size() == frac_arr.size());
+     pos_arr[0] = pos;
+diff --git a/core/mixer/mixer_c.cpp b/core/mixer/mixer_c.cpp
+index 4e2c3839b..8357fd482 100644
+--- a/core/mixer/mixer_c.cpp
++++ b/core/mixer/mixer_c.cpp
+@@ -149,7 +149,7 @@ void ApplyCoeffs(std::span<f32x2> const Values, std::size_t const IrSize,
+ 
+ force_inline void MixLine(std::span<float const> InSamples, std::span<float> const dst,
+     float &CurrentGain, float const TargetGain, float const delta, std::size_t const fade_len,
+-    std::size_t Counter) noexcept NONBLOCKING
++    std::size_t Counter)
+ {
+     auto const step = (TargetGain-CurrentGain) * delta;
+ 
+@@ -188,33 +188,33 @@ force_inline void MixLine(std::span<float const> InSamples, std::span<float> con
+ } // namespace
+ 
+ void Resample_Point_C(InterpState const*, std::span<float const> const src, unsigned const frac,
+-    unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const increment, std::span<float> const dst)
+ { DoResample<do_point>(src.subspan(MaxResamplerEdge), frac, increment, dst); }
+ 
+ void Resample_Linear_C(InterpState const*, std::span<float const> const src, unsigned const frac,
+-    unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const increment, std::span<float> const dst)
+ { DoResample<do_lerp>(src.subspan(MaxResamplerEdge), frac, increment, dst); }
+ 
+ void Resample_Cubic_C(InterpState const *const state, std::span<float const> const src,
+-    unsigned const frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const frac, unsigned const increment, std::span<float> const dst)
+ {
+-    DoResample<CubicState,do_cubic>(*gsl::not_null{std::get_if<CubicState>(state)},
+-        src.subspan(MaxResamplerEdge-1), frac, increment, dst);
++    DoResample<CubicState,do_cubic>(std::get<CubicState>(*state), src.subspan(MaxResamplerEdge-1),
++        frac, increment, dst);
+ }
+ 
+ void Resample_FastBSinc_C(InterpState const *const state, std::span<float const> const src,
+-    unsigned const frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const istate = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const istate = std::get<BsincState>(*state);
+     ASSUME(istate.l.c_val <= MaxResamplerEdge);
+     DoResample<BsincState,do_fastbsinc>(istate, src.subspan(MaxResamplerEdge-istate.l.c_val), frac,
+         increment, dst);
+ }
+ 
+ void Resample_BSinc_C(InterpState const *const state, std::span<float const> const src,
+-    unsigned const frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const istate = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const istate = std::get<BsincState>(*state);
+     ASSUME(istate.l.c_val <= MaxResamplerEdge);
+     DoResample<BsincState,do_bsinc>(istate, src.subspan(MaxResamplerEdge-istate.l.c_val), frac,
+         increment, dst);
+diff --git a/core/mixer/mixer_neon.cpp b/core/mixer/mixer_neon.cpp
+index 6e60f5af1..99f7f98e2 100644
+--- a/core/mixer/mixer_neon.cpp
++++ b/core/mixer/mixer_neon.cpp
+@@ -184,7 +184,7 @@ force_inline void MixLine(std::span<float const> const InSamples, std::span<floa
+ } // namespace
+ 
+ void Resample_Linear_NEON(InterpState const*, std::span<float const> const src, unsigned frac,
+-    unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+@@ -240,11 +240,11 @@ void Resample_Linear_NEON(InterpState const*, std::span<float const> const src,
+ }
+ 
+ void Resample_Cubic_NEON(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+-    auto const filter = gsl::not_null{std::get_if<CubicState>(state)}->filter;
++    auto const filter = std::get<CubicState>(*state).filter;
+ 
+     auto const increment4 = vdupq_n_u32(increment*4u);
+     auto const fracMask4 = vdupq_n_u32(MixerFracMask);
+@@ -330,9 +330,9 @@ void Resample_Cubic_NEON(InterpState const *const state, std::span<float const>
+ }
+ 
+ void Resample_FastBSinc_NEON(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const &bsinc = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const &bsinc = std::get<BsincState>(*state);
+     auto const m = std::size_t{bsinc.m.c_val};
+     ASSUME(m > 0);
+     ASSUME(m <= MaxResamplerPadding);
+@@ -376,9 +376,9 @@ void Resample_FastBSinc_NEON(InterpState const *const state, std::span<float con
+ }
+ 
+ void Resample_BSinc_NEON(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const &bsinc = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const &bsinc = std::get<BsincState>(*state);
+     auto const sf4 = vdupq_n_f32(bsinc.sf);
+     auto const m = std::size_t{bsinc.m.c_val};
+     ASSUME(m > 0);
+diff --git a/core/mixer/mixer_sse.cpp b/core/mixer/mixer_sse.cpp
+index 3b8c70d63..1053c1458 100644
+--- a/core/mixer/mixer_sse.cpp
++++ b/core/mixer/mixer_sse.cpp
+@@ -93,7 +93,7 @@ void ApplyCoeffs(std::span<f32x2> const Values, std::size_t const IrSize,
+ 
+ force_inline void MixLine(std::span<float const> const InSamples, std::span<float> const dst,
+     float &CurrentGain, float const TargetGain, float const delta, std::size_t const fade_len,
+-    std::size_t const realign_len, std::size_t const Counter) noexcept NONBLOCKING
++    std::size_t const realign_len, std::size_t const Counter)
+ {
+     auto const step = float{(TargetGain-CurrentGain) * delta};
+ 
+@@ -197,11 +197,11 @@ force_inline void MixLine(std::span<float const> const InSamples, std::span<floa
+ } // namespace
+ 
+ void Resample_Cubic_SSE(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+-    auto const filter = gsl::not_null{std::get_if<CubicState>(state)}->filter;
++    auto const filter = std::get<CubicState>(*state).filter;
+ 
+     auto pos = std::size_t{MaxResamplerEdge-1};
+     std::ranges::generate(dst, [&pos,&frac,src,increment,filter]() -> float
+@@ -230,9 +230,9 @@ void Resample_Cubic_SSE(InterpState const *const state, std::span<float const> c
+ }
+ 
+ void Resample_FastBSinc_SSE(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const &bsinc = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const &bsinc = std::get<BsincState>(*state);
+     auto const m = std::size_t{bsinc.m.c_val};
+     ASSUME(m > 0);
+     ASSUME(m <= MaxResamplerPadding);
+@@ -277,9 +277,9 @@ void Resample_FastBSinc_SSE(InterpState const *const state, std::span<float cons
+ }
+ 
+ void Resample_BSinc_SSE(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+-    auto const &bsinc = *gsl::not_null{std::get_if<BsincState>(state)};
++    auto const &bsinc = std::get<BsincState>(*state);
+     auto const sf4 = _mm_set1_ps(bsinc.sf);
+     auto const m = std::size_t{bsinc.m.c_val};
+     ASSUME(m > 0);
+diff --git a/core/mixer/mixer_sse2.cpp b/core/mixer/mixer_sse2.cpp
+index c563255ba..9df1e7c79 100644
+--- a/core/mixer/mixer_sse2.cpp
++++ b/core/mixer/mixer_sse2.cpp
+@@ -52,7 +52,7 @@ force_inline auto vmadd(__m128 const x, __m128 const y, __m128 const z) noexcept
+ } // namespace
+ 
+ void Resample_Linear_SSE2(InterpState const*, std::span<float const> const src, unsigned frac,
+-    unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+@@ -110,11 +110,11 @@ void Resample_Linear_SSE2(InterpState const*, std::span<float const> const src,
+ }
+ 
+ void Resample_Cubic_SSE2(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+-    auto const filter = gsl::not_null{std::get_if<CubicState>(state)}->filter;
++    auto const filter = std::get<CubicState>(*state).filter;
+ 
+     auto const increment4 = _mm_set1_epi32(as_signed(increment*4));
+     auto const fracMask4 = _mm_set1_epi32(MixerFracMask);
+diff --git a/core/mixer/mixer_sse41.cpp b/core/mixer/mixer_sse41.cpp
+index 1ba914934..c502833ce 100644
+--- a/core/mixer/mixer_sse41.cpp
++++ b/core/mixer/mixer_sse41.cpp
+@@ -53,7 +53,7 @@ force_inline auto vmadd(__m128 const x, __m128 const y, __m128 const z) noexcept
+ } // namespace
+ 
+ void Resample_Linear_SSE4(InterpState const*, std::span<float const> const src, unsigned frac,
+-    unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+@@ -115,11 +115,11 @@ void Resample_Linear_SSE4(InterpState const*, std::span<float const> const src,
+ }
+ 
+ void Resample_Cubic_SSE4(InterpState const *const state, std::span<float const> const src,
+-    unsigned frac, unsigned const increment, std::span<float> const dst) noexcept NONBLOCKING
++    unsigned frac, unsigned const increment, std::span<float> const dst)
+ {
+     ASSUME(frac < MixerFracOne);
+ 
+-    auto const filter = gsl::not_null{std::get_if<CubicState>(state)}->filter;
++    auto const filter = std::get<CubicState>(*state).filter;
+ 
+     auto const increment4 = _mm_set1_epi32(as_signed(increment*4));
+     auto const fracMask4 = _mm_set1_epi32(MixerFracMask);

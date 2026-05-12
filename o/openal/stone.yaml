@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : openal
-version     : "1.25.1"
-release     : 5
+version     : "1.25.2"
+release     : 6
 upstreams   :
-    - https://github.com/kcat/openal-soft/archive/refs/tags/1.25.1.tar.gz : 5f8efe8dfba5e9307a50251ba615ace857c7fa9dddfe34130b83e213d7f7cf24
+    - https://github.com/kcat/openal-soft/archive/refs/tags/1.25.2.tar.gz : fb27e5839aa11f0e5b9d33756965291fad5d6909ab928ea1f796f4a1a6877894
 homepage    : https://openal-soft.org/
 license     : LGPL-2.1-or-later
 summary     : Open Source OpenAL implementation
@@ -32,6 +32,7 @@ builddeps   :
 setup       : |
     # TODO: Rebase this patch
     # patch %(pkgdir)/unbundle-fmt.patch
+    %patch %(pkgdir)/ftbfs-clang-22.patch
 
     %cmake
 build       : |
