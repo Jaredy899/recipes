@@ -46,6 +46,6 @@
 		}
 	},
 	"source-name": "spirv-llvm-translator",
-	"source-release": "17",
+	"source-release": "18",
 	"source-version": "22.1.2"
 }
