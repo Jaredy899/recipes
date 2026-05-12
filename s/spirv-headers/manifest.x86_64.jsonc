@@ -51,6 +51,7 @@
 				"/usr/include/spirv/unified1/NonSemanticClspvReflection.h",
 				"/usr/include/spirv/unified1/NonSemanticDebugBreak.h",
 				"/usr/include/spirv/unified1/NonSemanticDebugPrintf.h",
+				"/usr/include/spirv/unified1/NonSemanticShaderDebugInfo.h",
 				"/usr/include/spirv/unified1/NonSemanticShaderDebugInfo100.h",
 				"/usr/include/spirv/unified1/NonSemanticVkspReflection.h",
 				"/usr/include/spirv/unified1/OpenCL.std.h",
@@ -63,6 +64,7 @@
 				"/usr/include/spirv/unified1/extinst.nonsemantic.debugbreak.grammar.json",
 				"/usr/include/spirv/unified1/extinst.nonsemantic.debugprintf.grammar.json",
 				"/usr/include/spirv/unified1/extinst.nonsemantic.shader.debuginfo.100.grammar.json",
+				"/usr/include/spirv/unified1/extinst.nonsemantic.shader.debuginfo.grammar.json",
 				"/usr/include/spirv/unified1/extinst.nonsemantic.vkspreflection.grammar.json",
 				"/usr/include/spirv/unified1/extinst.opencl.debuginfo.100.grammar.json",
 				"/usr/include/spirv/unified1/extinst.opencl.std.100.grammar.json",
@@ -93,6 +95,6 @@
 		}
 	},
 	"source-name": "spirv-headers",
-	"source-release": "12",
-	"source-version": "2026.1"
+	"source-release": "13",
+	"source-version": "2026.2"
 }
