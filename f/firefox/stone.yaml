@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name        : firefox
-version     : "150.0.2"
-release     : 63
+version     : "150.0.3"
+release     : 64
 homepage    : https://www.mozilla.org/
 upstreams   :
-    - https://releases.mozilla.org/pub/firefox/releases/150.0.2/source/firefox-150.0.2.source.tar.xz:
-        hash: e3830b20cdf660a9cdec6e4d2326d7ced07333d9746df028cfc00c8216acbec9
+    - https://releases.mozilla.org/pub/firefox/releases/150.0.3/source/firefox-150.0.3.source.tar.xz:
+        hash: 0a0a539ccc96d928fec78af511884b9b89d0aec87f0d5a8852d9298b2d9332da
         unpackdir: firefox
 summary     : Firefox web browser
 description : |
