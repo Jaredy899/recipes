@@ -105,6 +105,8 @@
 				"/usr/share/locale/pt_BR/LC_MESSAGES/plasma-keyboard.mo",
 				"/usr/share/locale/ro/LC_MESSAGES/kcm_plasmakeyboard.mo",
 				"/usr/share/locale/ro/LC_MESSAGES/plasma-keyboard.mo",
+				"/usr/share/locale/sk/LC_MESSAGES/kcm_plasmakeyboard.mo",
+				"/usr/share/locale/sk/LC_MESSAGES/plasma-keyboard.mo",
 				"/usr/share/locale/sl/LC_MESSAGES/kcm_plasmakeyboard.mo",
 				"/usr/share/locale/sl/LC_MESSAGES/plasma-keyboard.mo",
 				"/usr/share/locale/sv/LC_MESSAGES/kcm_plasmakeyboard.mo",
@@ -394,6 +396,6 @@
 		}
 	},
 	"source-name": "plasma-keyboard",
-	"source-release": "19",
-	"source-version": "6.6.4"
+	"source-release": "20",
+	"source-version": "6.6.5"
 }
