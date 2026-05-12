@@ -173,7 +173,7 @@
 				"/usr/lib/kf6/kimpanel-ibus-panel",
 				"/usr/lib/kf6/kimpanel-ibus-panel-launcher",
 				"/usr/lib/libkglobalaccelmodel.so.6",
-				"/usr/lib/libkglobalaccelmodel.so.6.6.4",
+				"/usr/lib/libkglobalaccelmodel.so.6.6.5",
 				"/usr/lib/qt6/plugins/attica_kde.so",
 				"/usr/lib/qt6/plugins/kf6/kded/device_automounter.so",
 				"/usr/lib/qt6/plugins/kf6/kded/kded_touchpad.so",
@@ -2678,6 +2678,7 @@
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_applet_org.kde.plasma.taskmanager.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_applet_org.kde.plasma.trash.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_applet_org.kde.plasma.windowlist.mo",
+				"/usr/share/locale/sk/LC_MESSAGES/plasma_runner_keys.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_runner_kwin.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_runner_plasma-desktop.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_shell_org.kde.plasma.desktop.mo",
@@ -3774,6 +3775,8 @@
 				"/usr/share/doc/HTML/ca/plasma-desktop/application-menu.png",
 				"/usr/share/doc/HTML/ca/plasma-desktop/index.cache.bz2",
 				"/usr/share/doc/HTML/ca/plasma-desktop/index.docbook",
+				"/usr/share/doc/HTML/cs/kcontrol/keyboard/index.cache.bz2",
+				"/usr/share/doc/HTML/cs/kcontrol/keyboard/index.docbook",
 				"/usr/share/doc/HTML/de/kcontrol/baloo/index.cache.bz2",
 				"/usr/share/doc/HTML/de/kcontrol/baloo/index.docbook",
 				"/usr/share/doc/HTML/de/kcontrol/clock/index.cache.bz2",
@@ -4385,6 +4388,6 @@
 		}
 	},
 	"source-name": "plasma-desktop",
-	"source-release": "29",
-	"source-version": "6.6.4"
+	"source-release": "30",
+	"source-version": "6.6.5"
 }

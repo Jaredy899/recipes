@@ -240,8 +240,10 @@
 				"/usr/share/locale/sa/LC_MESSAGES/kcm_kscreen.mo",
 				"/usr/share/locale/sa/LC_MESSAGES/kscreen_common.mo",
 				"/usr/share/locale/sa/LC_MESSAGES/plasma_applet_org.kde.kscreen.mo",
+				"/usr/share/locale/sk/LC_MESSAGES/hdrcalibrator.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/kcm_kscreen.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/kscreen_common.mo",
+				"/usr/share/locale/sk/LC_MESSAGES/kscreen_osd.mo",
 				"/usr/share/locale/sk/LC_MESSAGES/plasma_applet_org.kde.kscreen.mo",
 				"/usr/share/locale/sl/LC_MESSAGES/hdrcalibrator.mo",
 				"/usr/share/locale/sl/LC_MESSAGES/kcm_kscreen.mo",
@@ -299,6 +301,6 @@
 		}
 	},
 	"source-name": "kscreen",
-	"source-release": "23",
-	"source-version": "6.6.4"
+	"source-release": "24",
+	"source-version": "6.6.5"
 }
