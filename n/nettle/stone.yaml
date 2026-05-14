@@ -3,7 +3,7 @@
 
 name        : nettle
 version     : "4.0"
-release     : 8
+release     : 9
 homepage    : https://www.lysator.liu.se/~nisse/nettle/
 upstreams   :
     - https://ftp.gnu.org/gnu/nettle/nettle-4.0.tar.gz:
@@ -11,9 +11,9 @@ upstreams   :
         unpackdir: current
 
     # Don't delete this section, just comment it out if it's not needed. The build recipe accounts for it possibly not existing
-    - https://ftp.gnu.org/gnu/nettle/nettle-3.10.2.tar.gz:
-        hash: fe9ff51cb1f2abb5e65a6b8c10a92da0ab5ab6eaf26e7fc2b675c45f1fb519b5
-        unpackdir: compat
+    # - https://ftp.gnu.org/gnu/nettle/nettle-3.10.2.tar.gz:
+    #     hash: fe9ff51cb1f2abb5e65a6b8c10a92da0ab5ab6eaf26e7fc2b675c45f1fb519b5
+    #     unpackdir: compat
 summary     : Low-level cryptographic library
 description : |
    A low-level cryptographic library
