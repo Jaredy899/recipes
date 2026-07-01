@@ -1,0 +1,79 @@
+# SPDX-FileCopyrightText: 2026 AerynOS Developers
+# SPDX-License-Identifier: MPL-2.0
+
+name        : element-desktop
+version     : "1.12.22"
+release     : 1
+homepage    : https://element.io/
+upstreams   :
+    - https://github.com/element-hq/element-web/archive/refs/tags/v1.12.22.tar.gz : b062c513ea64da5d4448a51640e599da6944fd4f41df5530aebb64377ed116dd
+summary     : A glossy Matrix collaboration client for desktop
+description : |
+    All-in-one secure chat app for teams, friends and organisations. Keeps conversations in your control, safe from data-mining and ads. Talk to everyone through the open global Matrix network, protected by proper end-to-end encryption.
+license     :
+    - AGPL-3.0-or-later
+    - GPL-3.0-or-later
+networking  : true
+debug       : false
+strip       : false
+builddeps   :
+    - binary(cargo)
+    - binary(jq)
+    - binary(make)
+    - binary(node-24)
+    - binary(python3)
+    - pkgconfig(alsa)
+    - pkgconfig(cups)
+    - pkgconfig(gbm)
+    - pkgconfig(gtk+-3.0)
+    - pkgconfig(libsecret-1)
+    - pkgconfig(openssl)
+    - pkgconfig(xscrnsaver)
+    - soname(libcrypt.so.1(x86_64))
+rundeps     :
+    - libsecret
+environment : |
+    export PATH="/usr/lib/nodejs-24/bin:$PATH"
+    export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+    export OPENSSL_NO_VENDOR=1
+    export SQLCIPHER_BUNDLED=1
+    export CFLAGS="$CFLAGS -ffat-lto-objects"
+setup       : |
+    %patch %(pkgdir)/0001-Unpack-the-package.json-so-we-can-fix-the-Wayland-Ap.patch
+    %patch %(pkgdir)/0002-Ensure-that-autolaunch-files-specify-the-direct-path.patch
+    %patch %(pkgdir)/0003-Build-an-unpacked-directory-instead-of-tarballs.patch
+
+    jq '.update_base_url = null | .posthog = null | .show_labs_settings = true' \
+        apps/desktop/element.io/release/config.json > config.json
+
+    corepack enable
+    corepack prepare pnpm@11.2.2 --activate
+    corepack prepare yarn@1.22.22 --activate
+
+    pnpm install --frozen-lockfile
+build       : |
+    script -c "pnpm -C apps/web build" /dev/null
+    pnpm -C apps/desktop run build:native
+    script -c "pnpm -C apps/desktop run build --publish never" /dev/null
+install     : |
+    _element_root=%(libdir)/%(name)
+    _element_install=%(installroot)$_element_root
+
+    %install_dir $_element_install/resources
+    cp -a apps/web/webapp $_element_install/resources/webapp
+    %install_file config.json $_element_install/resources/webapp/config.json
+
+    cp -a apps/desktop/dist/linux-unpacked/* $_element_install
+
+    %install_exe %(pkgdir)/element-desktop.sh %(installroot)%(bindir)/element-desktop
+    %install_file apps/desktop/build/icon.png %(installroot)%(datadir)/icons/hicolor/512x512/apps/io.element.Element.png
+    %install_file %(pkgdir)/io.element.Element.desktop -t %(installroot)%(datadir)/applications/
+    %install_file %(pkgdir)/io.element.Element.metainfo.xml -t %(installroot)%(datadir)/metainfo/
+    %install_file LICENSE-AGPL-3.0 -t %(installroot)%(datadir)/licenses/%(name)/
+    %install_file LICENSE-GPL-3.0 -t %(installroot)%(datadir)/licenses/%(name)/
+
+    package_json=$_element_install/resources/app.asar.unpacked/package.json
+    tmp=$(mktemp)
+    jq '.desktopName = "io.element.Element.desktop"' $package_json > "$tmp" && mv "$tmp" $package_json
+
+    chmod -c u+s $_element_install/chrome-sandbox
