@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: 2026 AerynOS Developers
+# SPDX-License-Identifier: MPL-2.0
+
+name        : forgejo-cli
+version     : "0.5.0"
+release     : 1
+homepage    : https://codeberg.org/forgejo-contrib/forgejo-cli
+upstreams   :
+    - https://codeberg.org/forgejo-contrib/forgejo-cli/archive/v0.5.0.tar.gz : 028ebcbd744301fbfd144cd9bc5ff0a27e02d99b02c8abafb20742299715c556
+summary     : CLI application for interacting with Forgejo
+description : |
+    fj is a command-line client for Forgejo. It works alongside git and
+    handles the Forgejo-specific tasks that git doesn't, such as managing
+    issues, pull requests and repositories via the Forgejo API.
+license     : Apache-2.0 OR MIT
+networking  : true
+builddeps   :
+    - pkgconfig(libgit2)
+    - pkgconfig(libssh2)
+    - pkgconfig(openssl)
+setup       : |
+    %cargo_fetch
+build       : |
+    # Link against the system libraries instead of the vendored copies
+    export LIBGIT2_NO_VENDOR=1
+    export LIBSSH2_SYS_USE_PKG_CONFIG=1
+    export OPENSSL_NO_VENDOR=true
+    %cargo_build --all-features
+check       : |
+    export LIBGIT2_NO_VENDOR=1
+    export LIBSSH2_SYS_USE_PKG_CONFIG=1
+    export OPENSSL_NO_VENDOR=true
+    %cargo_test --all-features
+install     : |
+    %cargo_install
+
+    # Generate and install shell completions from the built binary
+    %(cargo_target_dir)/fj completion bash > fj.bash
+    %install_file fj.bash %(installroot)%(bashcompletionsdir)/fj
+
+    %(cargo_target_dir)/fj completion zsh > _fj
+    %install_file _fj %(installroot)%(zshcompletionsdir)/_fj
+
+    %(cargo_target_dir)/fj completion fish > fj.fish
+    %install_file fj.fish %(installroot)%(fishcompletionsdir)/fj.fish

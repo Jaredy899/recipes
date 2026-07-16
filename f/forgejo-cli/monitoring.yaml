@@ -1,0 +1,5 @@
+releases:
+  id: 377539
+  rss: https://codeberg.org/forgejo-contrib/forgejo-cli/releases.rss
+security:
+  cpe: ~ # No CPE found, last checked (2026-07-16)
