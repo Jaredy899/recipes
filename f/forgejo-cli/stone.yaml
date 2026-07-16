@@ -18,18 +18,16 @@ builddeps   :
     - pkgconfig(libgit2)
     - pkgconfig(libssh2)
     - pkgconfig(openssl)
-setup       : |
-    %cargo_fetch
-build       : |
+environment : |
     # Link against the system libraries instead of the vendored copies
     export LIBGIT2_NO_VENDOR=1
     export LIBSSH2_SYS_USE_PKG_CONFIG=1
     export OPENSSL_NO_VENDOR=true
+setup       : |
+    %cargo_fetch
+build       : |
     %cargo_build --all-features
 check       : |
-    export LIBGIT2_NO_VENDOR=1
-    export LIBSSH2_SYS_USE_PKG_CONFIG=1
-    export OPENSSL_NO_VENDOR=true
     %cargo_test --all-features
 install     : |
     %cargo_install
